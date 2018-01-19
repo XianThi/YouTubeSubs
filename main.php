@@ -44,7 +44,7 @@ function getSubs(channel_id) {
 	  <img class="circle-image" src="<?php echo $userData["snippet"]["thumbnails"]["default"]["url"]; ?>" width="100px" size="100px" /><br/>
 	  <p class="welcome">Welcome <?php echo $userData["snippet"]["title"]; ?> !</p>
 	  <p class="oauthemail"><a href="https://www.youtube.com/c/<?php echo $userData["snippet"]["customUrl"]; ?>" target="_blank" /><?php echo $userData["snippet"]["customUrl"]; ?></a></p>
-	  <p class="oauthemail">Subscribe : <?php echo $userData["statistics"]["subscriberCount"]; ?></p>
+	  <p class="oauthemail">Subscriber : <?php echo $userData["statistics"]["subscriberCount"]; ?></p>
 	  <p class="oauthemail">Credit : <?php echo $userData["credit"]; ?></p>
 	  <div class='getSubs'><a href='#' onClick='getSubs("<?php echo $userData["channel_id"];?>")'>GetSubs!</a></div>
 	  <div class='logout'><a href='?logout'>Logout</a></div>
