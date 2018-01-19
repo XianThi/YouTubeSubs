@@ -34,6 +34,17 @@ class DBController {
 			return $existing_member;
 		}
 	}
+	
+	function getUserByAccessToken($access_token){
+		$query = "SELECT * FROM members WHERE access_token = '" . $access_token . "'";
+		$result = mysql_query($query);
+		if(!empty($result)) {
+			$existing_member = mysql_fetch_assoc($result);
+			return $existing_member;
+		}
+		
+		
+	}
 	function updateCredit($channel_id){
 		$query = "update members set credit=credit-1 WHERE channel_id = '" . $channel_id . "'";
 		$result = mysql_query($query);
@@ -46,7 +57,7 @@ class DBController {
 	
 	function getUserswithLimit($limit,$channel_id){
 		$rows = array();
-		$query = "select *from members where channel_id<>$channel_id limit $limit ";
+		$query = "select *from members where channel_id<>'$channel_id' limit $limit ";
 		$result = mysql_query($query);
 		if(!empty($result)) {
 			while($row = mysql_fetch_assoc($result)){
