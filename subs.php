@@ -8,21 +8,16 @@ $existing_member = $objDBController->getUserByOAuthId($ch_id);
 if(count($existing_member)>0){
 	$credit=$existing_member["credit"];
 	$users=$objDBController->getUserswithLimit($credit,$ch_id);
+	$i=0;
 		foreach($users as $user){
 			$access_token=$user["access_token"];
 			$client->setAccessToken($access_token);
 			if ($client->getAccessToken()) {
 				try {
-					$resourceId = new Google_Service_YouTube_ResourceId();
-					$resourceId->setChannelId($ch_id);
-					$resourceId->setKind('youtube#channel');
-					$subscriptionSnippet = new Google_Service_YouTube_SubscriptionSnippet();
-					$subscriptionSnippet->setResourceId($resourceId);
-					$subscription = new Google_Service_YouTube_Subscription();
-					$subscription->setSnippet($subscriptionSnippet);
-					$subscriptionResponse = $youtube->subscriptions->insert('id,snippet',$subscription, array());
+					$result = $api->subscribe($access_token,$ch_id);
 					$objDBController->updateCredit($ch_id);
 					echo $user["member_name"].' is subscribe you <br>';
+					$i=$i+1;
 				}catch (Google_Service_Exception $e) {
 					echo "something went wrong\n";
 					echo $e->getMessage();
@@ -43,6 +38,7 @@ if(count($existing_member)>0){
 				<p>You need to <a href='$authUrl'>authorize access</a> before proceeding.<p>";
 			}
 		}
+		echo 'Totaly '.$i.' users subscribe you <br>';
 }else{
 	echo "user not found";
 	exit(0);
